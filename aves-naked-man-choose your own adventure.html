@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hey Avé 🍓</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cream: #fdf6e3;
+  --blush: #f4a261;
+  --lavender: #c77dff;
+  --gold: #f9c74f;
+  --rose: #e63946;
+  --green: #52b788;
+  --mango: #ff9f1c;
+  --grape: #9d4edd;
+  --berry: #e63946;
+  --lime: #80b918;
+  --navy: #0d0a14;
+}
+body { background: var(--navy); font-family: 'Quicksand', sans-serif; height: 100vh; overflow: hidden; }
+.deck { width: 100vw; height: 100vh; position: relative; }
+
+.slide {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 2rem 2rem 5rem; opacity: 0; pointer-events: none;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+  transform: translateY(20px); text-align: center; overflow-y: auto;
+}
+.slide.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+.slide.exit { opacity: 0; transform: translateY(-20px); pointer-events: none; }
+
+/* fruit bowl palette — each slide a different fruit tone */
+.s1  { background: radial-gradient(ellipse at 50% 40%, #3d1200 0%, #1e0800 60%, #100500 100%); }
+.s2  { background: radial-gradient(ellipse at 50% 50%, #3a1500 0%, #1e0a00 60%, #100500 100%); }
+.s3  { background: radial-gradient(ellipse at 55% 45%, #3d1800 0%, #200d00 60%, #100500 100%); }
+.s4  { background: radial-gradient(ellipse at 45% 55%, #2e0e00 0%, #1a0800 60%, #100500 100%); }
+.s5  { background: radial-gradient(ellipse at 50% 50%, #3a1000 0%, #1e0800 60%, #100500 100%); }
+.s6  { background: radial-gradient(ellipse at 50% 50%, #2e1500 0%, #180a00 60%, #100500 100%); }
+.s7  { background: radial-gradient(ellipse at 50% 45%, #381200 0%, #1c0800 60%, #100500 100%); }
+.s8  { background: radial-gradient(ellipse at 50% 55%, #301000 0%, #180800 60%, #100500 100%); }
+.s9  { background: radial-gradient(ellipse at 50% 50%, #3d1a00 0%, #200d00 60%, #100500 100%); }
+.s10 { background: radial-gradient(ellipse at 50% 50%, #2a1000 0%, #160800 60%, #100500 100%); }
+.s11 { background: radial-gradient(ellipse at 50% 55%, #351200 0%, #1a0800 60%, #100500 100%); }
+.s12 { background: radial-gradient(ellipse at 50% 50%, #3d1500 0%, #1e0a00 60%, #100500 100%); }
+.s13 { background: radial-gradient(ellipse at 50% 50%, #2e0e00 0%, #180800 60%, #100500 100%); }
+.s14 { background: radial-gradient(ellipse at 50% 50%, #381200 0%, #1c0800 60%, #100500 100%); }
+.s15 { background: radial-gradient(ellipse at 50% 50%, #301000 0%, #160800 60%, #100500 100%); }
+.s16 { background: radial-gradient(ellipse at 50% 50%, #3a1500 0%, #1e0a00 60%, #100500 100%); }
+.s17 { background: radial-gradient(ellipse at 50% 50%, #2e1200 0%, #180800 60%, #100500 100%); }
+.s18 { background: radial-gradient(ellipse at 50% 60%, #200800 0%, #100400 100%); }
+
+/* type */
+.eyebrow { font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--lavender); opacity: 0.6; margin-bottom: 0.5rem; }
+h2 { font-size: clamp(1.25rem, 3.5vw, 2rem); font-weight: 700; color: var(--cream); line-height: 1.25; margin-bottom: 0.6rem; }
+.sub { font-family: 'Lora', serif; font-style: italic; font-size: clamp(0.85rem, 2vw, 1.05rem); color: rgba(253,246,227,0.5); max-width: 400px; line-height: 1.65; margin-bottom: 0.85rem; }
+.bob { animation: bob 3s ease-in-out infinite; display: inline-block; }
+@keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+.hero-e { font-size: 2.8rem; margin-bottom: 0.6rem; }
+
+/* SLIDE 1 SPECIAL */
+.ave-title {
+  font-family: 'Quicksand', sans-serif; font-weight: 700;
+  font-size: clamp(4rem, 18vw, 9rem);
+  letter-spacing: 0.1em;
+  background: linear-gradient(135deg, #f9c74f, #f4a261, #e63946, #c77dff);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1; margin-bottom: 0.2rem;
+  filter: drop-shadow(0 0 30px rgba(249,199,79,0.4));
+}
+.slide1-line1 { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: clamp(1.1rem, 3vw, 1.6rem); color: var(--cream); margin-bottom: 0.2rem; }
+.slide1-line2 { font-family: 'Lora', serif; font-style: italic; font-size: clamp(0.9rem, 2.2vw, 1.15rem); color: rgba(253,246,227,0.6); margin-bottom: 1.1rem; max-width: 380px; line-height: 1.55; }
+.slide1-q { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: clamp(1rem, 2.5vw, 1.4rem); color: var(--mango); margin-bottom: 1rem; }
+
+/* wavy text */
+.wavy-wrap { display: inline-flex; justify-content: center; }
+.wavy-wrap span { display: inline-block; animation: wave 1.8s ease-in-out infinite; }
+@keyframes wave { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+.cya-label {
+  position: absolute; bottom: 4.5rem; left: 50%; transform: translateX(-50%);
+  font-family: 'Quicksand', sans-serif; font-weight: 700;
+  font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(253,246,227,0.3); white-space: nowrap;
+}
+
+/* statement slide */
+.statement { font-family: 'Lora', serif; font-style: italic; font-size: clamp(1.1rem, 3vw, 1.6rem); color: var(--cream); max-width: 400px; line-height: 1.75; opacity: 0.9; }
+.statement em { color: var(--mango); font-style: normal; }
+
+/* buttons */
+.btn-row { display: flex; gap: 0.7rem; justify-content: center; flex-wrap: wrap; margin-top: 0.5rem; }
+.btn { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.9rem; padding: 0.6rem 1.5rem; border-radius: 999px; border: none; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; line-height: 1.3; }
+.btn:hover { transform: scale(1.05); }
+.btn-yes { background: linear-gradient(135deg, var(--mango), var(--rose)); color: #fff; }
+.btn-yes:hover { box-shadow: 0 0 18px rgba(244,162,97,0.5); }
+.btn-no { background: rgba(255,255,255,0.07); color: var(--cream); border: 1px solid rgba(255,255,255,0.13); }
+.btn-no:hover { background: rgba(255,255,255,0.12); }
+
+/* poll cards — 2 up */
+.poll-row { display: flex; gap: 0.7rem; justify-content: center; flex-wrap: wrap; max-width: 480px; width: 100%; margin: 0.6rem 0; }
+.poll-card {
+  flex: 1; min-width: 120px; max-width: 170px;
+  background: rgba(255,255,255,0.04); border: 2px solid rgba(255,255,255,0.09);
+  border-radius: 18px; padding: 1rem 0.8rem; cursor: pointer; transition: all 0.2s;
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+}
+.poll-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); }
+.poll-card.sel { background: rgba(249,199,79,0.12); border-color: var(--gold); transform: scale(1.04); }
+.poll-card.sel-grape { background: rgba(157,78,221,0.14); border-color: var(--grape); transform: scale(1.04); }
+.poll-card.sel-berry { background: rgba(230,57,70,0.12); border-color: var(--berry); transform: scale(1.04); }
+.poll-card.sel-lime { background: rgba(128,185,24,0.12); border-color: var(--lime); transform: scale(1.04); }
+.poll-card.sel-mango { background: rgba(255,159,28,0.12); border-color: var(--mango); transform: scale(1.04); }
+.ce { font-size: 1.75rem; }
+.cl { font-family: 'Lora', serif; font-style: italic; font-size: 0.82rem; color: rgba(253,246,227,0.82); line-height: 1.35; text-align: center; }
+.poll-note { font-size: 0.68rem; color: rgba(255,255,255,0.25); margin-top: 0.15rem; letter-spacing: 0.05em; }
+
+/* multi-option grid — up to 8 options */
+.multi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; max-width: 440px; width: 100%; margin: 0.6rem 0; }
+.multi-card {
+  background: rgba(255,255,255,0.04); border: 2px solid rgba(255,255,255,0.09);
+  border-radius: 13px; padding: 0.7rem 0.75rem; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 0.55rem; text-align: left;
+}
+.multi-card:hover { background: rgba(255,255,255,0.08); }
+.multi-card.sel { border-color: var(--mango); background: rgba(255,159,28,0.1); }
+.multi-card .me { font-size: 1.2rem; flex-shrink: 0; }
+.multi-card .ml { font-family: 'Lora', serif; font-style: italic; font-size: 0.78rem; color: rgba(253,246,227,0.8); line-height: 1.3; }
+
+/* slider */
+.slider-wrap { max-width: 340px; width: 100%; margin: 0.8rem 0; }
+.slider-labels { display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 1rem; }
+input[type=range] { -webkit-appearance: none; width: 100%; height: 5px; border-radius: 999px; background: linear-gradient(90deg,#f9c74f,#f4a261,#e63946,#9d4edd); outline: none; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--cream); box-shadow: 0 2px 8px rgba(0,0,0,0.4); cursor: pointer; }
+.slider-val { margin-top: 0.6rem; font-size: 0.9rem; font-family: 'Lora', serif; font-style: italic; color: var(--cream); min-height: 1.4rem; }
+
+/* adventure */
+.adv-list { display: flex; flex-direction: column; gap: 0.5rem; max-width: 360px; width: 100%; margin: 0.6rem 0; }
+.adv-card { background: rgba(255,255,255,0.04); border: 2px solid rgba(255,255,255,0.09); border-radius: 12px; padding: 0.75rem 0.95rem; cursor: pointer; transition: all 0.2s; font-family: 'Lora', serif; font-style: italic; font-size: 0.88rem; color: rgba(253,246,227,0.82); display: flex; align-items: center; gap: 0.65rem; text-align: left; }
+.adv-card:hover { background: rgba(255,255,255,0.08); }
+.adv-card.sel { background: rgba(249,199,79,0.1); border-color: var(--gold); }
+.ae { font-size: 1.25rem; flex-shrink: 0; }
+.adv-input { background: none; border: none; outline: none; font-family: 'Lora', serif; font-style: italic; font-size: 0.88rem; color: var(--cream); width: 100%; border-bottom: 1px solid rgba(255,255,255,0.18); padding: 0.12rem 0; }
+.adv-input::placeholder { color: rgba(255,255,255,0.25); }
+
+/* results */
+.results-wrap { max-width: 400px; width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); border-radius: 16px; padding: 1rem 1.25rem; text-align: left; margin: 0.6rem 0; max-height: 35vh; overflow-y: auto; }
+.result-row { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.38rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-family: 'Lora', serif; font-style: italic; font-size: 0.84rem; color: rgba(253,246,227,0.72); line-height: 1.4; }
+.result-row:last-child { border-bottom: none; }
+.re { font-size: 0.9rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+/* finale rain */
+#rain-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.finale-content { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; max-width: 400px; width: 100%; padding: 0 1rem; }
+.gold-title { font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 700; background: linear-gradient(135deg,#f9c74f,#f4a261); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height: 1.2; margin-bottom: 0.25rem; }
+.whisper-area { width: 100%; max-width: 340px; margin-top: 0.65rem; }
+.whisper-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--lavender); opacity: 0.65; margin-bottom: 0.35rem; }
+.whisper-input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.13); border-radius: 12px; padding: 0.65rem 0.9rem; color: var(--cream); font-family: 'Lora', serif; font-style: italic; font-size: 0.9rem; outline: none; resize: none; line-height: 1.55; min-height: 70px; transition: border-color 0.2s; }
+.whisper-input::placeholder { color: rgba(255,255,255,0.3); }
+.whisper-input:focus { border-color: rgba(199,125,255,0.4); }
+.whisper-send { margin-top: 0.5rem; background: rgba(199,125,255,0.12); border: 1px solid rgba(199,125,255,0.28); color: var(--lavender); font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 0.76rem; letter-spacing: 0.08em; padding: 0.38rem 1rem; border-radius: 999px; cursor: pointer; transition: background 0.2s; }
+.whisper-send:hover { background: rgba(199,125,255,0.22); }
+.whisper-done { display: none; font-family: 'Lora', serif; font-style: italic; font-size: 0.85rem; color: rgba(253,246,227,0.45); margin-top: 0.45rem; }
+
+/* nav */
+
+/* Auto-advance nav — hide next on card slides */
+#nb { display: none; }
+.show-next #nb { display: inline-block; }
+
+.progress { position: fixed; bottom: 0; left: 0; height: 2px; background: linear-gradient(90deg,#f9c74f,#f4a261,#e63946,#9d4edd); transition: width 0.4s; z-index: 200; }
+.nav { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 0.55rem; z-index: 200; }
+.nbtn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: var(--cream); font-family: 'Quicksand', sans-serif; font-size: 0.73rem; font-weight: 700; padding: 0.32rem 0.88rem; border-radius: 999px; cursor: pointer; transition: background 0.2s; letter-spacing: 0.05em; }
+.nbtn:hover { background: rgba(255,255,255,0.12); }
+.nbtn:disabled { opacity: 0.18; cursor: default; }
+.ndot { font-size: 0.68rem; color: rgba(255,255,255,0.25); letter-spacing: 0.08em; min-width: 38px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- 1: Opening -->
+  <div class="slide s1 active" data-i="1">
+    <div class="cya-label" style="position:static;transform:none;margin-bottom:0.3rem;">
+      <span style="font-family:'Quicksand',sans-serif;font-weight:700;font-size:clamp(0.7rem,1.8vw,0.9rem);letter-spacing:0.15em;text-transform:uppercase;color:rgba(253,246,227,0.3);">An</span>
+    </div>
+    <div class="ave-title" style="font-size:clamp(2.8rem,12vw,5rem);">AVÉ</div>
+    <div class="cya-label" style="position:static;transform:none;margin:0.5rem 0 0.75rem;">
+      <span class="wavy-wrap" id="cyaWavy"></span>
+    </div>
+    <p style="font-family:'Lora',serif;font-style:italic;font-size:clamp(0.85rem,2vw,1rem);color:rgba(253,246,227,0.5);margin:0.5rem 0 0.25rem;">Lewis stars in:</p>
+    <h1 style="font-size:clamp(1.5rem,4.5vw,2.4rem);color:var(--mango);line-height:1.25;margin-bottom:1.25rem;">"Oh No! I Lost<br>All My Clothes:<br>Part 1"</h1>
+    <div class="btn-row" style="margin-top:0.5rem;">
+      <button class="btn btn-yes" onclick="appNav(1)">press play 🍑</button>
+    </div>
+  </div>
+
+  <!-- 2: Story prompt — where's he lost his pants -->
+  <div class="slide s2" data-i="2" data-autoadvance="1">
+    <div class="eyebrow">chapter one: the sighting</div>
+    <h2 style="margin-bottom:0.4rem;">imagine you're slowly making<br>your way, a gypsy, toward<br>the Oregon Country Fair.</h2>
+    <p class="sub">a sexy, chicken-lovin' anarchist man in Colorado has lost his pants. is he —</p>
+    <div class="poll-row">
+      <div class="poll-card" onclick="pick(this,'outside','mango')" data-key="outside">
+        <span class="ce">🌳</span>
+        <span class="cl">outside, near some bushes</span>
+      </div>
+      <div class="poll-card" onclick="pick(this,'inside','lime')" data-key="inside">
+        <span class="ce">🏠</span>
+        <span class="cl">inside, the comfort of a nice home</span>
+      </div>
+    </div>
+    <p class="poll-note">pick one or both</p>
+  </div>
+
+  <!-- 3: Underwear vs naked -->
+  <div class="slide s3" data-i="3" data-autoadvance="1">
+    <div class="eyebrow">chapter two: getting closer</div>
+    <h2 style="margin-bottom:0.4rem;">he feels good about it.<br>his body is totally sexy<br>and covered in a nice layer of fur.</h2>
+    <p class="sub">he lost his pants, but is he —</p>
+    <div class="poll-row">
+      <div class="poll-card" onclick="pick(this,'underwear','mango')" data-key="underwear">
+        <span class="ce">🩲</span>
+        <span class="cl">in his underwear?</span>
+      </div>
+      <div class="poll-card" onclick="pick(this,'naked','berry')" data-key="naked">
+        <span class="ce">🍑</span>
+        <span class="cl">butt ass naked?</span>
+      </div>
+    </div>
+    <p class="poll-note">pick one or both</p>
+  </div>
+
+  <!-- 4: Lighting -->
+  <div class="slide s4" data-i="4" data-autoadvance="1">
+    <div class="eyebrow">chapter three: he sets up camp</div>
+    <h2 style="margin-bottom:0.4rem;">a sun breaks through<br>the clouds and hits<br>him perfectly.</h2>
+    <p class="sub" style="margin-bottom:0.3rem;">he looks —</p>
+    <div class="poll-row">
+      <div class="poll-card" onclick="pick(this,'artsy','grape')" data-key="artsy">
+        <span class="ce">🎨</span>
+        <span class="cl">artsy & moody.<br>shadow. mystery.</span>
+      </div>
+      <div class="poll-card" onclick="pick(this,'straight','mango')" data-key="straight">
+        <span class="ce">😉</span>
+        <span class="cl">hot and ready to<br>pick some fruit.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5: The turn -->
+  <div class="slide s5" data-i="5" data-shownext="1">
+    <div class="eyebrow">chapter four: a complication</div>
+    <h2 style="margin-bottom:0.3rem;">he does a dramatic turn.<br>your eyes meet his.<br>then they begin darting around.</h2>
+    <p class="sub" style="margin-bottom:0.5rem;">his manly body is perfection. first you see his —</p>
+    <div class="multi-grid">
+      <div class="multi-card" onclick="pickMulti(this,'see-buttocks')" data-key="see-buttocks">
+        <span class="me">🍑</span><span class="ml">tight manly buttocks</span>
+      </div>
+      <div class="multi-card" onclick="pickMulti(this,'see-chest')" data-key="see-chest">
+        <span class="me">🦁</span><span class="ml">furry chest</span>
+      </div>
+      <div class="multi-card" onclick="pickMulti(this,'see-arms')" data-key="see-arms">
+        <span class="me">💪</span><span class="ml">rippling arms</span>
+      </div>
+      <div class="multi-card" onclick="pickMulti(this,'see-legs')" data-key="see-legs">
+        <span class="me">🦵</span><span class="ml">his long legs</span>
+      </div>
+    </div>
+    <p class="poll-note" id="potato-note" style="min-height:1.2rem;">pick as many as you like</p>
+  </div>
+
+  <!-- 6: 🍌 oui / non -->
+  <div class="slide s6" data-i="6">
+    <div class="eyebrow">chapter five: a confession</div>
+    <h2 style="margin-bottom:0.5rem;">"oh my god! eyes up here."</h2>
+    <p class="sub" style="margin-bottom:0.5rem;">did you accidentally see his banana?</p>
+    <div style="font-size:3.5rem;margin-bottom:0.5rem;animation:bob 2s ease-in-out infinite;display:inline-block;">🍌❓</div>
+    <div class="btn-row">
+      <button class="btn btn-yes" onclick="epYes()">oui 🍌</button>
+      <button class="btn btn-no" onclick="epNo()">non 🌿</button>
+    </div>
+    <p style="font-family:'Lora',serif;font-style:italic;font-size:0.82rem;color:rgba(253,246,227,0.35);margin-top:1rem;">either way, I think he liked it.</p>
+  </div>
+
+  <!-- 7: No dick pics unless requested -->
+  <div class="slide s7" data-i="7">
+    <div class="eyebrow">chapter five, a boundary</div>
+    <h2 style="margin-bottom:0.4rem;">OH MY GOSH,<br>no dick pics.</h2>
+    <div class="poll-row">
+      <div class="poll-card" onclick="dpOk(this)" data-key="dp-ok">
+        <span class="ce">👍</span>
+        <span class="cl">ok</span>
+      </div>
+      <div class="poll-card" onclick="dpWant(this)" data-key="dp-want">
+        <span class="ce">😈</span>
+        <span class="cl">but I want one</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8: 🍌 details — ok ok ok -->
+  <div class="slide s7" data-i="8" data-shownext="1">
+    <div class="eyebrow">chapter five, continued</div>
+    <h2>🍌 — is it</h2>
+    <div class="multi-grid" style="max-width:380px;">
+      <div class="multi-card" onclick="pickMulti(this,'ban-covered')" data-key="ban-covered">
+        <span class="me">🧥</span><span class="ml">fully covered up?</span>
+      </div>
+      <div class="multi-card" onclick="pickMulti(this,'ban-partial')" data-key="ban-partial">
+        <span class="me">🍃</span><span class="ml">partially covered up?</span>
+      </div>
+      <div class="multi-card" onclick="pickMulti(this,'ban-aroused')" data-key="ban-aroused">
+        <span class="me">🌋</span><span class="ml">aroused?</span>
+      </div>
+      <div class="multi-card" onclick="pickMulti(this,'ban-sad')" data-key="ban-sad">
+        <span class="me">🥺</span><span class="ml">sad?</span>
+      </div>
+      <div class="multi-card" onclick="pickMulti(this,'ban-classy')" data-key="ban-classy" style="grid-column:1/-1;">
+        <span class="me">🎩</span><span class="ml">what? I changed my mind, keep it classy</span>
+      </div>
+    </div>
+    <p class="poll-note">pick as many as you like</p>
+  </div>
+
+  <!-- 10: Extra credit — next time I see you -->
+  <div class="slide s10" data-i="9" data-shownext="1" style="justify-content:flex-start; padding-top:3.5rem;">
+    <div class="eyebrow" style="margin-top:0.5rem;">chapter six: he makes it to the fair</div>
+    <h2 style="margin-bottom:0.15rem;">his eyes gleam, and he says —</h2>
+    <p class="sub" style="margin-bottom:0.6rem;">"I'm trying to get to the State Fair too. maybe when I see you next we can —"</p>
+    <div style="display:flex;flex-direction:column;gap:0.4rem;max-width:420px;width:100%;overflow-y:auto;max-height:55vh;padding-right:0.25rem;">
+      <div class="multi-card" onclick="pickMulti(this,'ec-butter')" data-key="ec-butter"><span class="me">🧈</span><span class="ml">make homemade butter</span></div>
+      <div class="multi-card" onclick="pickMulti(this,'ec-lymph')" data-key="ec-lymph"><span class="me">💆</span><span class="ml">do a lymphatic drain</span></div>
+      <div class="multi-card" onclick="pickMulti(this,'ec-fruit')" data-key="ec-fruit"><span class="me">🍉</span><span class="ml">make an extraordinary fruit salad</span></div>
+      <div class="multi-card" onclick="pickMulti(this,'ec-swim')" data-key="ec-swim"><span class="me">🌊</span><span class="ml">go skinny dipping and make out</span></div>
+      <div class="multi-card" onclick="pickMulti(this,'ec-makeout')" data-key="ec-makeout"><span class="me">💋</span><span class="ml">just plain make out</span></div>
+      <div class="multi-card" onclick="pickMulti(this,'ec-nothing')" data-key="ec-nothing"><span class="me">☁️</span><span class="ml">do nothing for days on end</span></div>
+      <div class="multi-card" onclick="pickMulti(this,'ec-talk')" data-key="ec-talk"><span class="me">🌙</span><span class="ml">stay up too late talking about weird things</span></div>
+      <div class="multi-card" onclick="pickMulti(this,'ec-nap')" data-key="ec-nap"><span class="me">😴</span><span class="ml">take a really good nap together</span></div>
+      <div class="multi-card" onclick="pickMulti(this,'ec-forage')" data-key="ec-forage"><span class="me">🍄</span><span class="ml">forage for something</span></div>
+      <div class="multi-card" onclick="pickMulti(this,'ec-mud')" data-key="ec-mud"><span class="me">🪵</span><span class="ml">get lost in the woods together</span></div>
+      <div class="multi-card" onclick="pickMulti(this,'ec-dance')" data-key="ec-dance"><span class="me">🥁</span><span class="ml">dance barefoot somewhere we shouldn't</span></div>
+      <div class="multi-card" onclick="pickMulti(this,'ec-babybird')" data-key="ec-babybird"><span class="me">🐣</span><span class="ml">try baby birding</span></div>
+      <div class="multi-card" onclick="pickMulti(this,'ec-nipple')" data-key="ec-nipple"><span class="me">🍓</span><span class="ml">have some nipple based interactions</span></div>
+    </div>
+  </div>
+
+
+
+  <!-- 10: Dirty talk -->
+  <div class="slide s12" data-i="10" data-shownext="1">
+    <div class="eyebrow">chapter seven: he finds his words</div>
+    <h2 style="margin-bottom:0.4rem;">he wants to tell you things…</h2>
+    <p class="sub" style="margin-bottom:0.5rem;">and he knows your favorite flavor is —</p>
+    <div class="slider-wrap" style="margin-top:0.5rem;">
+      <div class="slider-labels"><span title="cutie">🐣</span><span>🍯</span><span>🌶️</span><span>🔥</span><span>💀</span></div>
+      <input type="range" min="0" max="4" step="1" value="1" id="talkSlider" oninput="updateSlider(this.value)">
+      <div class="slider-val" id="sliderVal">sweet and cutie 🐣</div>
+    </div>
+  </div>
+
+  <!-- Any requests -->
+  <div class="slide s14" data-i="11" data-shownext="1">
+    <div class="eyebrow">chapter eight: the floor is yours</div>
+    <h2 style="margin-bottom:0.3rem;">HE GETS HIS CAMERA OUT.</h2>
+    <p class="sub" style="margin-bottom:0.75rem;">he is a giver. he gets his camera. he asks if you have any requests at all.</p>
+    <div style="max-width:360px;width:100%;">
+      <textarea id="requestInput" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:0.85rem 1rem;color:#fdf6e3;font-family:'Lora',serif;font-style:italic;font-size:0.95rem;outline:none;resize:none;line-height:1.65;min-height:110px;transition:border-color 0.2s;" placeholder="be as specific or vague as you like… 🍑"></textarea>
+    </div>
+    <p class="poll-note" style="margin-top:0.5rem;">or leave blank and trust the process</p>
+  </div>
+
+
+
+
+
+
+  <!-- Compiling -->
+  <div class="slide s17" data-i="12" data-shownext="1">
+    <div style="font-size:2.5rem;margin-bottom:0.75rem;animation:bob 1.2s ease-in-out infinite;display:inline-block;">📊</div>
+    <div class="cya-label" style="position:static;transform:none;margin-bottom:1rem;">
+      <span class="wavy-wrap" id="consideringWavy"></span>
+    </div>
+    <h2 style="color:var(--mango);font-size:clamp(1.1rem,3vw,1.6rem);letter-spacing:0.03em;line-height:1.45;">NOW LEWIS IS GOING TO<br>COMPILE THIS DATA INTO A<br>HOT PHOTO NARRATIVE,<br>LET'S REVIEW</h2>
+  </div>
+
+  <!-- 18: Finale — emoji rain -->
+  <div class="slide s18" data-i="13" id="finaleSlide">
+    <canvas id="rain-canvas"></canvas>
+    <div class="finale-content" id="finaleContent">
+      <div class="eyebrow" style="color:var(--gold);">final transmission</div>
+      <div class="gold-title" style="font-size:clamp(1.3rem,4vw,2rem);">INCOMING PHOTOS<br>WITH YOUR CHOICES.</div>
+      <p class="sub" style="margin:0.4rem 0 0.6rem;">you chose —</p>
+      <div class="results-wrap" id="resultsWrap"></div>
+      <div class="whisper-area">
+        <div class="whisper-label">p.s. — whisper me a secret</div>
+        <textarea class="whisper-input" id="whisperInput" placeholder="e.g. I can't wait to fix your butt sticker tattoo 🎨" rows="2"></textarea>
+        <br>
+        <button class="whisper-send" id="whisperSend" onclick="submitAll()">send to Lewis 💋</button>
+        <div class="whisper-done" id="whisperDone" style="display:none;">
+          <span style="color:var(--gold);font-weight:700;">sent. 🌸</span><br>
+          <span style="font-size:0.78rem;opacity:0.6;">he's going to get right to work.</span>
+        </div>
+        <div class="whisper-error" id="whisperError" style="display:none;font-family:'Lora',serif;font-style:italic;font-size:0.8rem;color:rgba(255,100,100,0.7);margin-top:0.4rem;">something went sideways — try again 🌿</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="progress" id="prog" style="width:6.67%"></div>
+<div class="nav">
+  <button class="nbtn" id="pb" onclick="appNav(-1)" disabled>← back</button>
+  <span class="ndot" id="nd">1 / 12</span>
+  <button class="nbtn" id="nb" onclick="appNav(1)">next →</button>
+</div>
+
+<script>
+(function() {
+  var cur = 1;
+  var TOTAL = 13;
+  var epChoice = null;
+  var dpChoice = null;
+  var answers = {};
+
+  // wavy text helper
+  function buildWavy(elId, text) {
+    var el = document.getElementById(elId);
+    if (!el) return;
+    text.split('').forEach(function(ch, i) {
+      var s = document.createElement('span');
+      s.textContent = ch === ' ' ? '\u00a0' : ch;
+      s.style.animationDelay = (i * 0.06) + 's';
+      el.appendChild(s);
+    });
+  }
+  buildWavy('cyaWavy', 'choose your own adventure');
+  buildWavy('consideringWavy', 'considering your adventure…');
+
+  // slider
+  var sliderTexts = ['cutie-based only 🐣','sweet and tender 🍯','a little spicy 🌶️','direct and specific 🔥','absolutely feral 💀'];
+  window.updateSlider = function(v) {
+    document.getElementById('sliderVal').textContent = sliderTexts[+v];
+    answers['talk'] = sliderTexts[+v];
+  };
+  answers['talk'] = sliderTexts[0];
+
+  // pick helpers
+  var selMap = { mango:'sel-mango', grape:'sel-grape', berry:'sel-berry', lime:'sel-lime' };
+  function checkAutoAdvance(el) {
+    var slide = el.closest('[data-i]');
+    if (slide && slide.getAttribute('data-autoadvance')) {
+      setTimeout(function() { appNav(1); }, 420);
+    }
+  }
+  window.pick = function(el, key, color) {
+    var cls = selMap[color] || 'sel';
+    var on = !el.classList.contains(cls);
+    // remove all possible sel classes first
+    ['sel','sel-mango','sel-grape','sel-berry','sel-lime'].forEach(function(c){ el.classList.remove(c); });
+    if (on) {
+      el.classList.add(cls);
+      answers[key] = (el.querySelector('.cl') || {}).textContent.replace(/\s+/g,' ').trim() || key;
+      checkAutoAdvance(el);
+    } else {
+      delete answers[key];
+    }
+  };
+  window.pickMulti = function(el, key) {
+    var on = !el.classList.contains('sel');
+    el.classList.toggle('sel', on);
+    if (on) answers[key] = (el.querySelector('.ml') || {}).textContent.replace(/\s+/g,' ').trim() || key;
+    else delete answers[key];
+  };
+  window.pickAdv = function(el, key) {
+    if (el.querySelector('.adv-input')) return;
+    var on = !el.classList.contains('sel');
+    el.classList.toggle('sel', on);
+    if (on) answers[key] = (el.querySelector('span:last-child') || {}).textContent.trim() || key;
+    else delete answers[key];
+  };
+
+  window.showNope = function() {
+    var m = document.getElementById('nope-msg');
+    if (m) m.style.display = 'block';
+  };
+
+  window.epYes = function() {
+    epChoice = 'yes';
+    answers['banana'] = 'yes 🍌';
+    moveTo(7);
+  };
+  window.epNo = function() {
+    epChoice = 'no';
+    answers['banana'] = 'no thank you 🌿';
+    moveTo(7);
+  };
+
+  window.dpOk = function(el) {
+    dpChoice = 'ok';
+    answers['dp-ok'] = 'ok';
+    moveTo(9);
+  };
+  window.dpWant = function(el) {
+    dpChoice = 'want';
+    answers['dp-want'] = 'but I want one';
+    moveTo(8);
+  };
+
+  window.submitAll = function() {
+    var btn = document.getElementById('whisperSend');
+    var done = document.getElementById('whisperDone');
+    var err = document.getElementById('whisperError');
+    var whisper = (document.getElementById('whisperInput') || {}).value || '';
+    var request = (document.getElementById('requestInput') || {}).value || '';
+
+    // Collect all answers into a readable string
+    var lines = [];
+    lines.push('=== AVÉ\'S ANSWERS ===');
+    lines.push('dirty talk level: ' + (answers['talk'] || 'not set'));
+    if (request) lines.push('special request: ' + request);
+    if (whisper) lines.push('whisper: ' + whisper);
+    lines.push('');
+    lines.push('--- selections ---');
+    Object.keys(answers).forEach(function(k) {
+      if (k === 'talk' || k === 'whisper') return;
+      lines.push(k + ': ' + answers[k]);
+    });
+
+    if (btn) { btn.disabled = true; btn.textContent = 'sending…'; }
+    if (err) err.style.display = 'none';
+
+    fetch('https://formspree.io/f/mkolzgyv', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: '🍓 Avé filled out the zine',
+        answers: lines.join('\n'),
+        whisper: whisper || '(none)',
+        special_request: request || '(none)',
+        dirty_talk: answers['talk'] || 'not set',
+        all_selections: JSON.stringify(answers, null, 2)
+      })
+    })
+    .then(function(r) { return r.json().then(function(data) { return {ok: r.ok, data: data}; }); })
+    .then(function(res) {
+      if (res.ok || res.data.ok) {
+        if (btn) btn.style.display = 'none';
+        if (done) done.style.display = 'block';
+        answers['whisper'] = whisper;
+      } else {
+        if (btn) { btn.disabled = false; btn.textContent = 'send to Lewis 💋'; }
+        if (err) { err.style.display = 'block'; err.textContent = 'error: ' + (res.data.error || JSON.stringify(res.data)); }
+      }
+    })
+    .catch(function(e) {
+      if (btn) { btn.disabled = false; btn.textContent = 'send to Lewis 💋'; }
+      if (err) { err.style.display = 'block'; err.textContent = 'network error: ' + e.message; }
+    });
+  };
+
+  // results map
+  var RL = {
+    outside:{e:'🌳',l:'outside, near some bushes'},
+    inside:{e:'🏠',l:'inside, the comfort of a nice home'},
+    underwear:{e:'🩲',l:'in his underwear'},
+    naked:{e:'🍑',l:'butt ass naked'},
+    artsy:{e:'🎨',l:'artsy & moody'},
+    straight:{e:'😉',l:'hot and ready to pick some fruit'},
+    'see-buttocks':{e:'🍑',l:'tight manly buttocks'},
+    'see-chest':{e:'🦁',l:'furry chest'},
+    'see-arms':{e:'💪',l:'rippling arms'},
+    'see-legs':{e:'🦵',l:'his long legs'},
+    banana:{e:'🍌',l:null},
+    'dp-ok':{e:'👍',l:'no dick pics — ok with that'},
+    'dp-want':{e:'😈',l:'no dick pics — but she wants one'},
+    'ban-covered':{e:'🧥',l:'fully covered up'},
+    'ban-partial':{e:'🍃',l:'partially covered up'},
+    'ban-aroused':{e:'🌋',l:'aroused'},
+    'ban-sad':{e:'🥺',l:'sad banana 🥺'},
+    'ban-classy':{e:'🎩',l:'changed mind — keep it classy'},
+    close:{e:'🔍',l:'real close — every detail'},
+    far:{e:'🌄',l:'far away — the whole picture'},
+
+
+    chaos:{e:'🎲',l:'randomly. no warning.'},
+    scheduled:{e:'📅',l:'scheduled. very organized.'},
+    'thing-looked':{e:'👁️',l:'being looked at like the only person in the room'},
+    'thing-said':{e:'💬',l:'someone saying something that makes you go oh'},
+    'thing-touch':{e:'🤲',l:'a hand on the small of your back'},
+    'thing-knowing':{e:'🌿',l:'just knowing someone sees you'},
+    'want-urgent':{e:'⚡',l:'wanted urgently. desperately.'},
+    'want-slow':{e:'🕯️',l:'wanted slowly. patiently.'},
+    'want-play':{e:'🎭',l:'wanted playfully. with laughing.'},
+    'want-simmered':{e:'🌶️',l:'wanted like I\'ve been thinking about it all day'},
+    'recip-yes':{e:'💌',l:'would send something — already thought about it'},
+    'recip-maybe':{e:'🌸',l:'might send something — ask nicely'},
+    'recip-know':{e:'😈',l:'already knows exactly what she\'d send'},
+    'recip-already':{e:'📬',l:'we already do this. why are you asking.'},
+    'lament-fruit':{e:'🍓',l:'would cry into fruit bowl'},
+    'lament-letter':{e:'📜',l:'would write strongly worded letter to universe'},
+    'lament-ceiling':{e:'🌙',l:'would stare at ceiling thinking of what could have been'},
+    'lament-perish':{e:'💀',l:'would simply perish'},
+    massage:{e:'🕯️',l:'candlelit massage with a happy ending'},
+    butter:{e:'🧈',l:'homemade butter. yes.'},
+    'chicken-yes':{e:'🐔',l:'chicken in frame = better. noted.'},
+    'chicken-no':{e:'😭',l:'no chickens in frame. understood.'},
+    'ec-butter':{e:'🧈',l:'make homemade butter'},
+    'ec-lymph':{e:'💆',l:'do a lymphatic drain'},
+    'ec-nipple':{e:'🍓',l:'have some nipple based interactions'},
+    'ec-fruit':{e:'🍉',l:'make an extraordinary fruit salad'},
+    'ec-swim':{e:'🌊',l:'go skinny dipping and make out'},
+    'ec-makeout':{e:'💋',l:'just plain make out'},
+    'ec-nothing':{e:'☁️',l:'do nothing for days on end'},
+    'ec-talk':{e:'🌙',l:'stay up too late talking about weird things'},
+    'ec-nap':{e:'😴',l:'take a really good nap together'},
+    'ec-babybird':{e:'🐣',l:'try baby birding'},
+    'ec-trouble':{e:'😈',l:'getting into some kind of trouble'},
+    'ec-forage':{e:'🍄',l:'forage for something'},
+    'ec-mud':{e:'🪵',l:'get lost in the woods together'},
+    'ec-dance':{e:'🥁',l:'dance barefoot somewhere we shouldn\'t'},
+  };
+
+  function buildResults() {
+    var wrap = document.getElementById('resultsWrap');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    // talk always
+    var t = document.createElement('div'); t.className = 'result-row';
+    t.innerHTML = '<span class="re">💬</span><span>dirty talk: ' + answers['talk'] + '</span>';
+    wrap.appendChild(t);
+    // write-in
+    var inp = document.getElementById('adventureInput');
+    var adv = inp ? inp.value.trim() : '';
+    var reqInp = document.getElementById('requestInput');
+    var req = reqInp ? reqInp.value.trim() : '';
+    if (req) { var rr=document.createElement('div');rr.className='result-row';rr.innerHTML='<span class="re">📬</span><span>request: "'+req+'"</span>';wrap.appendChild(rr); }
+    if (adv) {
+      var r = document.createElement('div'); r.className = 'result-row';
+      r.innerHTML = '<span class="re">✍️</span><span>when I see you next: "' + adv + '"</span>';
+      wrap.appendChild(r);
+    }
+    var found = false;
+    Object.keys(RL).forEach(function(k) {
+      if (!answers[k]) return;
+      var m = RL[k]; found = true;
+      var r = document.createElement('div'); r.className = 'result-row';
+      if (!m.l) r.innerHTML = '<span class="re">' + m.e + '</span><span>🍌: ' + answers[k] + '</span>';
+      else r.innerHTML = '<span class="re">' + m.e + '</span><span>' + m.l + '</span>';
+      wrap.appendChild(r);
+    });
+    if (!found && !adv) {
+      var r = document.createElement('div'); r.className = 'result-row';
+      r.innerHTML = '<span class="re">🌿</span><span>a mystery. I like that about you.</span>';
+      wrap.appendChild(r);
+    }
+  }
+
+  // ---- RAIN ----
+  var EMOJIS = ['🍌','🍑','🍓','🥭','🌸','🍋','🧈','🐔','✨','🔥','💀','🌿','💋','👄','🥵','😈','🫦','💦','🍒','🌶️','💌','🎫','🍇','🍉','🫐'];
+  var particles = [], textRects = [], animRunning = false;
+  var rainCanvas = null, rCtx = null;
+
+  function initRain() {
+    if (animRunning) return;
+    rainCanvas = document.getElementById('rain-canvas');
+    if (!rainCanvas) return;
+    rCtx = rainCanvas.getContext('2d');
+    rainCanvas.width = window.innerWidth;
+    rainCanvas.height = window.innerHeight;
+    particles = [];
+    animRunning = true;
+    setTimeout(function() {
+      updateTextRects();
+      for (var i = 0; i < 35; i++) (function(ii){ setTimeout(spawnOne, ii * 90); })(i);
+      setInterval(spawnOne, 320);
+      requestAnimationFrame(rainLoop);
+    }, 250);
+  }
+
+  function updateTextRects() {
+    textRects = [];
+    var el = document.getElementById('finaleContent');
+    if (!el) return;
+    var r = el.getBoundingClientRect();
+    textRects.push({x:r.left-14,y:r.top-14,w:r.width+28,h:r.height+28});
+  }
+
+  function spawnOne() {
+    if (!rainCanvas) return;
+    var size = 18 + Math.random() * 16;
+    particles.push({
+      x: Math.random() * rainCanvas.width,
+      y: -size * 2,
+      vx: (Math.random() - 0.5) * 1.4,
+      vy: 1.4 + Math.random() * 2.2,
+      emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
+      size: size, angle: 0,
+      rot: (Math.random() - 0.5) * 0.25,
+      bounces: 0
+    });
+  }
+
+  function hitRect(px, py, ps) {
+    var h = ps * 0.5;
+    for (var i = 0; i < textRects.length; i++) {
+      var r = textRects[i];
+      if (px+h>r.x && px-h<r.x+r.w && py+h>r.y && py-h<r.y+r.h) return r;
+    }
+    return null;
+  }
+
+  function rainLoop() {
+    if (!rCtx || !rainCanvas) return;
+    rCtx.clearRect(0, 0, rainCanvas.width, rainCanvas.height);
+    for (var i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      p.vy += 0.1; p.x += p.vx; p.y += p.vy; p.angle += p.rot;
+      var hit = hitRect(p.x, p.y, p.size);
+      if (hit) {
+        if (p.vy > 0 && p.y < hit.y + hit.h * 0.5) {
+          p.vy *= -0.55; p.vx += (Math.random()-0.5)*1.8;
+          p.y = hit.y - p.size * 0.5; p.bounces++;
+        } else if (p.vy < 0 && p.y > hit.y + hit.h * 0.5) {
+          p.vy *= -0.45; p.y = hit.y + hit.h + p.size * 0.5; p.bounces++;
+        }
+        if (p.x < hit.x + hit.w * 0.5) p.vx = Math.abs(p.vx) * 0.5;
+        else p.vx = -Math.abs(p.vx) * 0.5;
+      }
+      if (p.x < 0) { p.x = 0; p.vx = Math.abs(p.vx); }
+      if (p.x > rainCanvas.width) { p.x = rainCanvas.width; p.vx = -Math.abs(p.vx); }
+      if (p.y > rainCanvas.height + p.size * 2) { particles.splice(i, 1); continue; }
+      rCtx.save();
+      rCtx.translate(p.x, p.y);
+      rCtx.rotate(p.angle);
+      rCtx.font = p.size + 'px serif';
+      rCtx.textAlign = 'center';
+      rCtx.textBaseline = 'middle';
+      rCtx.globalAlpha = Math.max(0, 0.9 - p.bounces * 0.08);
+      rCtx.fillText(p.emoji, 0, 0);
+      rCtx.restore();
+    }
+    requestAnimationFrame(rainLoop);
+  }
+
+  // ---- NAV ----
+  function moveTo(n, dir) {
+    try {
+      if (n < 1 || n > TOTAL) return;
+      if (n === 13) { buildResults(); setTimeout(initRain, 350); }
+      var curr = document.querySelector('.slide.active');
+      if (curr) {
+        curr.classList.add('exit');
+        setTimeout(function(){ curr.classList.remove('active','exit'); }, 450);
+      }
+      var next = document.querySelector('[data-i="' + n + '"]');
+      if (!next) return;
+      var d = (dir !== undefined) ? dir : (n > cur ? 1 : -1);
+      next.style.transform = d > 0 ? 'translateY(20px)' : 'translateY(-20px)';
+      next.offsetHeight; // force reflow
+      next.classList.add('active');
+      cur = n;
+      document.getElementById('nd').textContent = cur + ' / ' + TOTAL;
+      document.getElementById('prog').style.width = ((cur / TOTAL) * 100) + '%';
+      document.getElementById('pb').disabled = cur === 1;
+      var deckEl = document.querySelector('[data-i="' + n + '"]');
+      var showNext = deckEl && deckEl.getAttribute('data-shownext');
+      document.getElementById('nb').style.display = showNext ? 'inline-block' : 'none';
+      if (n === 12) { setTimeout(function(){ appNav(1); }, 2800); }
+      document.getElementById('nb').disabled = cur === TOTAL;
+    } catch(err) {
+      alert('nav error: ' + err.message);
+    }
+  }
+
+  window.appNav = function(d) {
+    var n = cur + d;
+    // banana branching — must choose before advancing from slide 6
+    if (d > 0 && cur === 6 && epChoice === null) return;
+    // skip slide 8 (banana details) if dick-pic choice was "ok"
+    if (d > 0 && n === 8 && dpChoice === 'ok') n = 9;
+    if (d < 0 && n === 9 && dpChoice === 'ok') n = 7;
+    moveTo(n, d);
+  };
+
+  // expose moveTo for epYes/epNo
+  window.moveTo = moveTo;
+
+  // keyboard
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') window.appNav(1);
+    if (e.key === 'ArrowLeft') window.appNav(-1);
+  });
+  // swipe
+  var sx = 0;
+  document.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    var d = sx - e.changedTouches[0].clientX;
+    if (Math.abs(d) > 50) window.appNav(d > 0 ? 1 : -1);
+  });
+
+})();
+</script>
+</body>
+</html>
