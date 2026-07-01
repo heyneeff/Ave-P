@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ave's Golden Ticket 🎫</title>
+<style>
+  :root {
+    --red: #b3001b;
+    --red-dark: #6e0012;
+    --red-glow: #ff2f4d;
+    --bg: #120204;
+    --card: #1c0509;
+    --text: #f4e3e5;
+    --text-dim: #c99aa0;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, var(--red-dark) 0%, var(--bg) 65%);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    padding: 40px 16px 80px;
+  }
+
+  .wrap {
+    max-width: 560px;
+    width: 100%;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2.1rem;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    color: var(--text);
+    text-shadow: 0 0 18px rgba(255, 47, 77, 0.55);
+  }
+
+  .subtitle {
+    text-align: center;
+    color: var(--text-dim);
+    margin-bottom: 36px;
+    font-style: italic;
+    font-size: 1rem;
+  }
+
+  .consent {
+    background: rgba(179, 0, 27, 0.12);
+    border: 1px solid rgba(255, 47, 77, 0.35);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--card);
+    border: 1px solid rgba(255, 47, 77, 0.2);
+    border-radius: 12px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.15s ease, background 0.2s ease;
+  }
+
+  .reveal-field {
+    flex-basis: 100%;
+    width: 100%;
+    margin-top: 4px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 47, 77, 0.3);
+    border-radius: 10px;
+    color: var(--text);
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    resize: vertical;
+    min-height: 50px;
+    cursor: text;
+  }
+
+  .reveal-field:focus {
+    outline: none;
+    border-color: var(--red-glow);
+  }
+
+  .item:hover {
+    border-color: var(--red-glow);
+    transform: translateY(-1px);
+  }
+
+  .item.checked {
+    background: linear-gradient(135deg, rgba(255,47,77,0.18), rgba(179,0,27,0.1));
+    border-color: var(--red-glow);
+  }
+
+  .item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    border-radius: 6px;
+    border: 2px solid var(--red-glow);
+    margin-top: 2px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.15s ease;
+  }
+
+  .item input[type="checkbox"]:checked {
+    background: var(--red-glow);
+    box-shadow: 0 0 10px rgba(255, 47, 77, 0.8);
+  }
+
+  .item input[type="checkbox"]:checked::after {
+    content: "✓";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    color: #1c0509;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .item-text {
+    flex: 1;
+  }
+
+  .item-title {
+    font-size: 1.05rem;
+    font-weight: bold;
+    display: block;
+  }
+
+  .item-desc {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+
+  .note-field {
+    margin-top: 10px;
+  }
+
+  .note-field textarea {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid rgba(255, 47, 77, 0.3);
+    border-radius: 10px;
+    color: var(--text);
+    padding: 12px 14px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    resize: vertical;
+    min-height: 60px;
+  }
+
+  .note-field textarea:focus {
+    outline: none;
+    border-color: var(--red-glow);
+  }
+
+  .name-field {
+    margin-top: 6px;
+    display: none;
+  }
+
+  button[type="submit"] {
+    margin-top: 20px;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-family: inherit;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: var(--text);
+    background: linear-gradient(135deg, var(--red-glow), var(--red-dark));
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 47, 77, 0.4);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(255, 47, 77, 0.65);
+  }
+
+  button[type="submit"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  #status {
+    text-align: center;
+    margin-top: 18px;
+    font-style: italic;
+    color: var(--text-dim);
+    min-height: 1.4em;
+  }
+
+  #status.success { color: var(--red-glow); }
+
+  .section-title {
+    color: var(--red-glow);
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 28px 0 4px;
+    text-align: center;
+    text-shadow: 0 0 12px rgba(255, 47, 77, 0.4);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Ave's Golden Ticket 🎫</h1>
+  <p class="subtitle">This ticket is valid in perpetuity, as long as Lewis is still alive and sexy.</p>
+
+  <div class="consent">
+    Tell me what you want and need, then just wait and see. 💋
+  </div>
+
+  <form id="requestForm" action="https://formspree.io/f/xojokppq" method="POST">
+    <div id="items"></div>
+
+    <h2 class="section-title">Scenarios &amp; Games</h2>
+    <div id="scenarios"></div>
+
+    <div class="note-field">
+      <textarea name="extra_notes" placeholder="Anything specific you want, timing, or other requests..."></textarea>
+    </div>
+
+    <button type="submit" id="submitBtn" disabled>Send the Request 💌</button>
+    <p id="status"></p>
+  </form>
+</div>
+
+<script>
+  const requests = [
+    { title: "Spicy Selfie", desc: "A photo that's just for me, right now, whatever mood you're in." },
+    { title: "Fully Naked Pic", desc: "No holding back." },
+    { title: "Voice Note - Spicy", desc: "Say something dirty out loud, just for my ears." },
+    { title: "Voice Note - Sweet", desc: "Something soft, loving, whispered." },
+    { title: "Turn Me On", desc: "What's the first thing that comes to mind?", reveal: true },
+    { title: "Dumb Joke", desc: "The worst pun or dad joke you've got. Bonus points for a bit." },
+    { title: "Silly Dance Video", desc: "10 seconds of you being ridiculous." },
+    { title: "Striptease Video", desc: "A slow reveal, on your terms, however far you want to take it." },
+    { title: "Rate the Outfit", desc: "Show me what you're wearing right now, before or after it comes off." },
+    { title: "3 Things I Want To Do To You", desc: "A text list, as explicit as you feel like being." },
+    { title: "Confession", desc: "A voice note admitting something naughty you've thought about." },
+    { title: "Bedtime Story (Spicy Edition)", desc: "Make up a filthy little story and send it as text or voice." },
+    { title: "Compliment Shower", desc: "A voice note just listing things you love about me." },
+    { title: "Do Something Nasty For Me Baby", desc: "No specifics, just go feral." },
+    { title: "I Need Cute Memes", desc: "Flood my phone with the softest, dumbest memes you can find." },
+    { title: "Mystery Surprise", desc: "You pick something off-menu and surprise me with it." }
+  ];
+
+  const scenarios = [
+    { title: "Video Ping-Pong", desc: "We send each other videos back and forth until someone finishes first." },
+    { title: "Guess What I'm Wearing", desc: "Text clues only — I have to guess right before you reveal it." },
+    { title: "Truth or Dare, Text Edition", desc: "5 rounds, no chickening out on either side." },
+    { title: "Sexy FaceTime", desc: "Video call, camera stays on, no holding back." },
+    { title: "Countdown Tease", desc: "One tiny reveal every hour until bedtime." }
+  ];
+
+  const submitBtn = document.getElementById('submitBtn');
+
+  function renderList(list, containerEl) {
+  list.forEach((r, i) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'item';
+    wrap.innerHTML = `
+      <input type="checkbox" name="requests" value="${r.title}">
+      <span class="item-text">
+        <span class="item-title">${r.title}</span>
+        <span class="item-desc">${r.desc}</span>
+      </span>
+    `;
+    const checkbox = wrap.querySelector('input');
+
+    let revealField = null;
+    if (r.reveal) {
+      revealField = document.createElement('textarea');
+      revealField.name = 'turn_me_on_response';
+      revealField.placeholder = "what's the first thing that comes to mind?";
+      revealField.className = 'reveal-field';
+      revealField.style.display = 'none';
+      wrap.appendChild(revealField);
+    }
+
+    wrap.addEventListener('click', (e) => {
+      if (e.target === checkbox || e.target === revealField) return;
+      checkbox.checked = !checkbox.checked;
+      checkbox.dispatchEvent(new Event('change'));
+    });
+
+    checkbox.addEventListener('change', () => {
+      wrap.classList.toggle('checked', checkbox.checked);
+      if (revealField) revealField.style.display = checkbox.checked ? 'block' : 'none';
+      updateSubmitState();
+    });
+
+    containerEl.appendChild(wrap);
+  });
+  }
+
+  renderList(requests, document.getElementById('items'));
+  renderList(scenarios, document.getElementById('scenarios'));
+
+  function updateSubmitState() {
+    const anyChecked = document.querySelectorAll('input[name="requests"]:checked').length > 0;
+    submitBtn.disabled = !anyChecked;
+  }
+
+  const form = document.getElementById('requestForm');
+  const status = document.getElementById('status');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    status.textContent = 'Sending...';
+    status.classList.remove('success');
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        status.textContent = "Sent 🔥 He's got it now.";
+        status.classList.add('success');
+        form.reset();
+        document.querySelectorAll('.item.checked').forEach(el => el.classList.remove('checked'));
+      } else {
+        status.textContent = "Hmm, something went wrong. Try again?";
+        submitBtn.disabled = false;
+      }
+    } catch (err) {
+      status.textContent = "Network error — try again?";
+      submitBtn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
